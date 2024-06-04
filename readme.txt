@@ -1,7 +1,7 @@
 Team members: (names and student IDs)
-* ...
-* ...
-* ...
+* Tim van Schie (5261651)
+* Connor ... ()
+* Jill van Pagée (2663457)
 
 Tick the boxes below for the implemented features. Add a brief note only if necessary, e.g., if it's only partially working, or how to turn it on.
 
