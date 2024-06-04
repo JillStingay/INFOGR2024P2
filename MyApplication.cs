@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 
 namespace Template
 {
@@ -45,12 +46,13 @@ namespace Template
         public void Tick()
         {
             screen.Clear(0);
-            screen.Print("hello world", 2, 2, 0xffff00);
+            //screen.Print("hello world", 2, 2, 0xffff00);
         }
 
         // tick for OpenGL rendering code
         public void RenderGL()
         {
+            /*
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
@@ -93,6 +95,14 @@ namespace Template
                     floor?.Render(shader, floorObjectToWorld * worldToCamera * cameraToScreen, floorObjectToWorld, wood);
                 }
             }
+            */
+            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Begin(PrimitiveType.Triangles);
+            GL.Vertex3(-0.5f, -0.5f, 0);
+            GL.Vertex3(0.5f, -0.5f, 0);
+            GL.Vertex3(-0.5f, 0.5f, 0);
+            GL.End();
+
         }
     }
 }

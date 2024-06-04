@@ -27,7 +27,7 @@ namespace Template
     public class OpenTKApp : GameWindow
     {
 
-        public const bool allowPrehistoricOpenGL = false; // not supported on MacOS
+        public const bool allowPrehistoricOpenGL = true; // not supported on MacOS
         public static readonly bool isMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
         static int screenID;            // unique integer identifier of the OpenGL texture
