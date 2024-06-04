@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\timva\\Source\\Repos\\INFOGR2024P2\\INFOGR2024TemplateP2.csproj": {}
+    "C:\\Users\\julia\\Desktop\\school\\Graphics\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\timva\\Source\\Repos\\INFOGR2024P2\\INFOGR2024TemplateP2.csproj": {
+    "C:\\Users\\julia\\Desktop\\school\\Graphics\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\timva\\Source\\Repos\\INFOGR2024P2\\INFOGR2024TemplateP2.csproj",
+        "projectUniqueName": "C:\\Users\\julia\\Desktop\\school\\Graphics\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2.csproj",
         "projectName": "INFOGR2024TemplateP2",
-        "projectPath": "C:\\Users\\timva\\Source\\Repos\\INFOGR2024P2\\INFOGR2024TemplateP2.csproj",
-        "packagesPath": "C:\\Users\\timva\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\timva\\Source\\Repos\\INFOGR2024P2\\obj\\",
+        "projectPath": "C:\\Users\\julia\\Desktop\\school\\Graphics\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2.csproj",
+        "packagesPath": "C:\\Users\\julia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\julia\\Desktop\\school\\Graphics\\INFOGR2024TemplateP2\\INFOGR2024TemplateP2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\timva\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\julia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -65,12 +60,30 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.28, 6.0.28]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.28, 6.0.28]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.28, 6.0.28]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.28, 6.0.28]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\julia\\.dotnet\\sdk\\8.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
