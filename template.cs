@@ -186,8 +186,10 @@ namespace Template
                 // prepare for generic OpenGL rendering
                 GL.Enable(EnableCap.DepthTest);
                 GL.Clear(ClearBufferMask.DepthBufferBit);
+                GL.PushMatrix();
                 // do OpenGL rendering
                 app.RenderGL();
+                GL.PopMatrix();
             }
             // tell OpenTK we're done rendering
             SwapBuffers();

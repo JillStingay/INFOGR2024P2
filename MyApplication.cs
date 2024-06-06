@@ -18,6 +18,9 @@ namespace Template
         ScreenQuad? quad;                       // screen filling quad for post processing
         readonly bool useRenderTarget = true;   // required for post processing
 
+        Surface map;
+        float[,] h;
+
         // constructor
         public MyApplication(Surface screen)
         {
@@ -26,6 +29,7 @@ namespace Template
         // initialize
         public void Init()
         {
+            /*
             // load teapot
             teapot = new Mesh("../../../assets/teapot.obj");
             floor = new Mesh("../../../assets/floor.obj");
@@ -40,6 +44,11 @@ namespace Template
             // create the render target
             if (useRenderTarget) target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
+            */
+            map = new Surface("../../../assets/coin.png");
+            h = new float[256, 256];
+            for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
+                    h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;
         }
 
         // tick for background surface
@@ -47,6 +56,7 @@ namespace Template
         {
             screen.Clear(0);
             //screen.Print("hello world", 2, 2, 0xffff00);
+            a += 0.1f;
         }
 
         // tick for OpenGL rendering code
@@ -96,13 +106,24 @@ namespace Template
                 }
             }
             */
-            GL.Color3(1.0f, 0.0f, 0.0f);
-            GL.Begin(PrimitiveType.Triangles);
-            GL.Vertex3(-0.5f, -0.5f, 0);
-            GL.Vertex3(0.5f, -0.5f, 0);
-            GL.Vertex3(-0.5f, 0.5f, 0);
-            GL.End();
+            Matrix4 M = Matrix4.CreatePerspectiveFieldOfView(1.6f, 1.3f, .1f, 1000);
+            GL.LoadMatrix(ref M);
+            GL.Translate(0, 0, -1);
+            GL.Rotate(110, 1, 0, 0);
+            GL.Rotate(a * 180 / Math.PI, 0, 0, 1);
 
+            GL.Color3(1.0f, 0.0f, 0.0f);
+
+            GL.Begin(PrimitiveType.Quads);
+            for (float x = 0; x < 255; x++)
+                for (float y = 0; y < 255; y++)
+                {
+                    GL.Vertex3((x / (256f / 2f)) - 1f, y / (256f / 2f) - 1f, h[(int)x, (int)y]);
+                    GL.Vertex3((x / (256f / 2f)) - 1f + (2f/256f), y / (256f / 2f) - 1f, h[(int)x + 1, (int)y]);
+                    GL.Vertex3((x / (256f / 2f)) - 1f, y / (256f / 2f) - 1f + (2f/256f), h[(int)x, (int)y + 1]);
+                    GL.Vertex3((x / (256f / 2f)) - 1f + (2f / 256f), y / (256f / 2f) - 1f + (2f / 256f), h[(int)x + 1, (int)y + 1]);
+                }
+            GL.End();
         }
     }
 }
