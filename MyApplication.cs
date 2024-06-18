@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL;
+using INFOGR2024TemplateP2;
 
 namespace Template
 {
@@ -20,6 +21,8 @@ namespace Template
 
         Surface map;
         float[,] h;
+        Camera camera;
+        node world;
 
         // constructor
         public MyApplication(Surface screen)
@@ -29,7 +32,7 @@ namespace Template
         // initialize
         public void Init()
         {
-            
+            /*
             // load teapot
             teapot = new Mesh("../../../assets/teapot.obj");
             floor = new Mesh("../../../assets/floor.obj");
@@ -44,11 +47,15 @@ namespace Template
             // create the render target
             if (useRenderTarget) target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
-            
+
             /*map = new Surface("../../../assets/coin.png");
             h = new float[256, 256];
             for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
                     h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;*/
+
+            camera = new Camera(new Vector3(1, 1, 1), new Vector3(0, 0, 1), new Vector3(1, 0, 0));
+            world = new node(null, null);
+            new node(world, teapot);
         }
 
         // tick for background surface
@@ -134,6 +141,8 @@ namespace Template
             GL.Vertex3(-1, 1, 1);
             GL.End();
             */
+
+
         }
     }
 }

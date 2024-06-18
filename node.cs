@@ -5,10 +5,19 @@ namespace Template;
 public class node
 {
     //public Matrix4 objectToParent { get; set; }
-    public Mesh mesh { get; set; }
-    public List<node> children;
+    public Mesh? mesh { get; set; }
+    public List<node> children = new List<node>();
+    public node? parent;
 
-    public void Render(Matrix4 worldToCamera, Matrix4 objectToParent)
+    public node(node? parent, Mesh? mesh)
+    {
+        this.parent = parent;
+        this.mesh = mesh;
+        if (parent != null)
+            parent.children.Add(this);
+    }
+
+    public void Render(Matrix4 worldToCamera, Matrix4 objectToParent, Surface screen, Shader shader, Texture texture)
     {
         Matrix4 objectToWorld = objectToParent * mesh.parentToWorld;
         Matrix4 objectToCamera = objectToWorld * worldToCamera;
@@ -19,7 +28,7 @@ public class node
 
         foreach (node node in children)
         {
-            node.Render(worldToCamera, mesh.parentToWorld);
+            node.Render(worldToCamera, mesh.parentToWorld, screen, shader, texture);
         }
     }
 }
