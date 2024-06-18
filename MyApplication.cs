@@ -29,7 +29,7 @@ namespace Template
         // initialize
         public void Init()
         {
-            /*
+            
             // load teapot
             teapot = new Mesh("../../../assets/teapot.obj");
             floor = new Mesh("../../../assets/floor.obj");
@@ -44,11 +44,11 @@ namespace Template
             // create the render target
             if (useRenderTarget) target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
-            */
-            map = new Surface("../../../assets/coin.png");
+            
+            /*map = new Surface("../../../assets/coin.png");
             h = new float[256, 256];
             for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
-                    h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;
+                    h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;*/
         }
 
         // tick for background surface
@@ -62,7 +62,7 @@ namespace Template
         // tick for OpenGL rendering code
         public void RenderGL()
         {
-            /*
+            
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
@@ -70,13 +70,13 @@ namespace Template
 
             // prepare matrix for vertex shader
             float angle90degrees = MathF.PI / 2;
-            Matrix4 teapotObjectToWorld = Matrix4.CreateScale(0.5f) * Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
+            Matrix4 teapotObjectToWorld = Matrix4.CreateScale(0.5f) * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a);
             Matrix4 floorObjectToWorld = Matrix4.CreateScale(4.0f) * Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
             Matrix4 worldToCamera = Matrix4.CreateTranslation(new Vector3(0, -14.5f, 0)) * Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), angle90degrees);
             Matrix4 cameraToScreen = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f), (float)screen.width/screen.height, .1f, 1000);
 
             // update rotation
-            a += 0.001f * frameDuration;
+            //a += 0.001f * frameDuration;
             if (a > 2 * MathF.PI) a -= 2 * MathF.PI;
 
             if (useRenderTarget && target != null && quad != null)
@@ -88,7 +88,7 @@ namespace Template
                 if (shader != null && wood != null)
                 {
                     teapot?.Render(shader, teapotObjectToWorld * worldToCamera * cameraToScreen, teapotObjectToWorld, wood);
-                    floor?.Render(shader, floorObjectToWorld * worldToCamera * cameraToScreen, floorObjectToWorld, wood);
+                    //floor?.Render(shader, floorObjectToWorld * worldToCamera * cameraToScreen, floorObjectToWorld, wood);
                 }
 
                 // render quad
@@ -105,7 +105,8 @@ namespace Template
                     floor?.Render(shader, floorObjectToWorld * worldToCamera * cameraToScreen, floorObjectToWorld, wood);
                 }
             }
-            */
+            
+            /*
             Matrix4 M = Matrix4.CreatePerspectiveFieldOfView(1.6f, 1.3f, .1f, 1000);
             GL.LoadMatrix(ref M);
             GL.Translate(0, 0, -1);
@@ -124,6 +125,15 @@ namespace Template
                     GL.Vertex3((x / (256f / 2f)) - 1f + (2f / 256f), y / (256f / 2f) - 1f + (2f / 256f), h[(int)x + 1, (int)y + 1]);
                 }
             GL.End();
+            */
+            /*
+            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Begin(PrimitiveType.Triangles);
+            GL.Vertex3(0, 0, 1);
+            GL.Vertex3(1, 1, 1);
+            GL.Vertex3(-1, 1, 1);
+            GL.End();
+            */
         }
     }
 }

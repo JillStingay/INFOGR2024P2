@@ -16,7 +16,7 @@ namespace Template
         int vertexBufferId;                     // vertex buffer object (VBO) for vertex data
         int triangleBufferId;                   // element buffer object (EBO) for triangle vertex indices
         int quadBufferId;                       // element buffer object (EBO) for quad vertex indices (not in Modern OpenGL)
-        public Matrix4 modelMatrix { get; set; }
+        public Matrix4 parentToWorld { get; set; }
         
         
         
