@@ -32,10 +32,10 @@ namespace Template
         // initialize
         public void Init()
         {
-            /*
+            
             // load teapot
-            teapot = new Mesh("../../../assets/teapot.obj");
-            floor = new Mesh("../../../assets/floor.obj");
+            teapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(-4, 0, 0));
+            //floor = new Mesh("../../../assets/floor.obj");
             // initialize stopwatch
             timer.Reset();
             timer.Start();
@@ -53,7 +53,7 @@ namespace Template
             for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
                     h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;*/
 
-            camera = new Camera(new Vector3(1, 1, 1), new Vector3(0, 0, 1), new Vector3(1, 0, 0));
+            camera = new Camera(new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(1, 0, 0));
             world = new node(null, null);
             new node(world, teapot);
         }
@@ -69,7 +69,7 @@ namespace Template
         // tick for OpenGL rendering code
         public void RenderGL()
         {
-            
+            /*
             // measure frame duration
             float frameDuration = timer.ElapsedMilliseconds;
             timer.Reset();
@@ -142,7 +142,7 @@ namespace Template
             GL.End();
             */
 
-
+            world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, wood);
         }
     }
 }

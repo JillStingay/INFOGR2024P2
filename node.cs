@@ -19,16 +19,20 @@ public class node
 
     public void Render(Matrix4 worldToCamera, Matrix4 objectToParent, Surface screen, Shader shader, Texture texture)
     {
-        Matrix4 objectToWorld = objectToParent * mesh.parentToWorld;
+        Matrix4 parentToWorld = Matrix4.Identity;
+        if (mesh != null)
+            parentToWorld = mesh.parentToWorld;
+        Matrix4 objectToWorld = objectToParent * parentToWorld;
         Matrix4 objectToCamera = objectToWorld * worldToCamera;
         Matrix4 cameraToScreen = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f), (float)screen.width / screen.height, .1f, 1000);
         Matrix4 objectToScreen = objectToCamera * cameraToScreen;
 
-        mesh.Render(shader, objectToScreen, objectToWorld, texture);
+        if (mesh != null)
+            mesh.Render(shader, objectToScreen, objectToWorld, texture);
 
         foreach (node node in children)
         {
-            node.Render(worldToCamera, mesh.parentToWorld, screen, shader, texture);
+            node.Render(worldToCamera, parentToWorld, screen, shader, texture);
         }
     }
 }
