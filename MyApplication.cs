@@ -9,7 +9,7 @@ namespace Template
     {
         // member variables
         public Surface screen;                  // background surface for printing etc.
-        Mesh? teapot, floor;                    // meshes to draw using OpenGL
+        Mesh? teapot, floor, smallteapot;                    // meshes to draw using OpenGL
         float a = 0;                            // teapot rotation angle
         readonly Stopwatch timer = new();       // timer for measuring frame duration
         Shader? shader;                         // shader to use for rendering
@@ -34,7 +34,9 @@ namespace Template
         {
 
             // load teapot
-            teapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateScale(0.5f));// * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a));
+            teapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(20, 50, 0)) * Matrix4.CreateScale(0.5f));// * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a));
+            smallteapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(-10, 0, 0)));
+            Mesh smallteapot2 = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(-10, 0, 0)));
             //floor = new Mesh("../../../assets/floor.obj");
             // initialize stopwatch
             timer.Reset();
@@ -53,9 +55,11 @@ namespace Template
             for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
                     h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;*/
 
-            camera = new Camera(new Vector3(0, 0, 10), new Vector3(0, 1, 0), new Vector3(0, 0, -1));
+            camera = new Camera(new Vector3(0, 25, 20), new Vector3(0, 1, 0), new Vector3(0, 0, -1));
             world = new node(null, null);
-            new node(world, teapot);
+            node teapotNode = new node(world, teapot);
+            node smallteapotNode = new node(teapotNode, smallteapot);
+            node smallteapot2Node = new node(smallteapotNode, smallteapot2);
         }
 
         // tick for background surface

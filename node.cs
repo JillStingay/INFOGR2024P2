@@ -32,7 +32,7 @@ public class node
 
         foreach (node node in children)
         {
-            node.Render(worldToCamera, parentToWorld, screen, shader, texture);
+            node.Render(worldToCamera, objectToWorld, screen, shader, texture);
         }
     }
 }
