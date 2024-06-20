@@ -32,9 +32,9 @@ namespace Template
         // initialize
         public void Init()
         {
-            
+
             // load teapot
-            teapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(-4, 0, 0));
+            teapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateScale(0.5f));// * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a));
             //floor = new Mesh("../../../assets/floor.obj");
             // initialize stopwatch
             timer.Reset();
@@ -53,7 +53,7 @@ namespace Template
             for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
                     h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;*/
 
-            camera = new Camera(new Vector3(0, 0, 0), new Vector3(0, 0, 1), new Vector3(1, 0, 0));
+            camera = new Camera(new Vector3(0, 0, 10), new Vector3(0, 1, 0), new Vector3(0, 0, -1));
             world = new node(null, null);
             new node(world, teapot);
         }
@@ -63,7 +63,7 @@ namespace Template
         {
             screen.Clear(0);
             //screen.Print("hello world", 2, 2, 0xffff00);
-            a += 0.1f;
+            //a += 0.1f;
         }
 
         // tick for OpenGL rendering code
@@ -142,6 +142,7 @@ namespace Template
             GL.End();
             */
 
+            //world.Render(Matrix4.CreateTranslation(new Vector3(0, -14.5f, 0)) * Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)Math.PI/2), Matrix4.Identity, screen, shader, wood);
             world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, wood);
         }
     }
