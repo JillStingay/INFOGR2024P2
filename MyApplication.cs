@@ -60,6 +60,8 @@ namespace Template
             node teapotNode = new node(world, motherTeapot);
             node teapotling1Node = new node(teapotNode, teapotLing1);
             node teapotling2Node = new node(teapotling1Node, teapotling2);
+
+            teapotNode.AddLight(new Light(new Vector3(10, 5, 0), new Vector3(1, 1, 1), 1));
         }
 
         // tick for background surface
@@ -146,8 +148,7 @@ namespace Template
             GL.End();
             */
 
-            //world.Render(Matrix4.CreateTranslation(new Vector3(0, -14.5f, 0)) * Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)Math.PI/2), Matrix4.Identity, screen, shader, wood);
-            world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, wood);
+            world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, wood, camera.location);
         }
     }
 }

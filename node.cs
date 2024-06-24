@@ -7,6 +7,7 @@ public class node
     //public Matrix4 objectToParent { get; set; }
     public Mesh? mesh { get; set; }
     public List<node> children = new List<node>();
+    public List<Light> lights = new List<Light>();
     public node? parent;
 
     public node(node? parent, Mesh? mesh)
@@ -17,7 +18,12 @@ public class node
             parent.children.Add(this);
     }
 
-    public void Render(Matrix4 worldToCamera, Matrix4 objectToParent, Surface screen, Shader shader, Texture texture)
+    public void AddLight(Light l)
+    {
+        this.lights.Add(l);
+    }
+
+    public void Render(Matrix4 worldToCamera, Matrix4 objectToParent, Surface screen, Shader shader, Texture texture, Vector3 cameraPosition)
     {
         Matrix4 parentToWorld = Matrix4.Identity;
         Matrix4 scaleMatrix = Matrix4.Identity;
@@ -32,11 +38,11 @@ public class node
         Matrix4 objectToScreen = objectToCamera * cameraToScreen;
 
         if (mesh != null)
-            mesh.Render(shader, objectToScreen, objectToWorld, texture);
+            mesh.Render(shader, objectToScreen, objectToWorld, texture, this.lights, cameraPosition);
 
         foreach (node node in children)
         {
-            node.Render(worldToCamera, objectToWorld, screen, shader, texture);
+            node.Render(worldToCamera, objectToWorld, screen, shader, texture, cameraPosition);
         }
     }
 }

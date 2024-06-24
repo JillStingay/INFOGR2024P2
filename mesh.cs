@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using OpenTK.Graphics.GL;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
@@ -60,7 +61,7 @@ namespace Template
         }
 
         // render the mesh using the supplied shader and matrix
-        public void Render(Shader shader, Matrix4 objectToScreen, Matrix4 objectToWorld, Texture texture)
+        public void Render(Shader shader, Matrix4 objectToScreen, Matrix4 objectToWorld, Texture texture, List<Light> lights, Vector3 cameraPosition)
         {
             // on first run, prepare buffers
             Prepare();
@@ -79,6 +80,9 @@ namespace Template
             GL.UniformMatrix4(shader.uniform_objectToScreen, false, ref objectToScreen);
             GL.UniformMatrix4(shader.uniform_objectToWorld, false, ref objectToWorld);
 
+            // get ambient light location
+            GL.Uniform3(shader.uniform_ambientLightColor, new Vector3(0.1f, 0.1f, 0.1f));
+
             // enable position, normal and uv attribute arrays corresponding to the shader "in" variables
             GL.EnableVertexAttribArray(shader.in_vertexPositionObject);
             GL.EnableVertexAttribArray(shader.in_vertexNormalObject);
@@ -91,6 +95,16 @@ namespace Template
             GL.VertexAttribPointer(shader.in_vertexUV, 2, VertexAttribPointerType.Float, false, 32, 0);
             GL.VertexAttribPointer(shader.in_vertexNormalObject, 3, VertexAttribPointerType.Float, true, 32, 2 * 4);
             GL.VertexAttribPointer(shader.in_vertexPositionObject, 3, VertexAttribPointerType.Float, false, 32, 5 * 4);
+
+            if (lights != null && lights.Count > 0)
+            {
+                Light firstLight = lights[0];
+                GL.Uniform3(shader.uniform_lightPosition, firstLight.Position);
+                GL.Uniform3(shader.uniform_lightColor, firstLight.Color);
+                GL.Uniform1(shader.uniform_lightIntensity, firstLight.Intensity);
+            }
+
+            GL.Uniform3(shader.uniform_viewPosition, ref cameraPosition);
 
             // bind triangle index data and render
             if (triangles != null && triangles.Length > 0)
