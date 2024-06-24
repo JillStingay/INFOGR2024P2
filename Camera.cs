@@ -9,18 +9,19 @@ namespace INFOGR2024TemplateP2
 {
     internal class Camera
     {
-        public Vector3 location, upDirection, lookDirection;
+        public Vector3 location, upDirection, lookDirection, rightDirection;
         public Vector3 u, v, w; //normalized camera coordinate system, v points up, u points right, w points backwards
 
-        public Camera(Vector3 location, Vector3 upDirection, Vector3 lookDirection)
+        public Camera(Vector3 location, Vector3 upDirection, Vector3 lookDirection, Vector3 rightDirection)
         {
             this.location = location;
             this.upDirection = upDirection;
             this.lookDirection = lookDirection;
-            ConstructCoordinateSystem(upDirection, lookDirection);
+            this.rightDirection = rightDirection;
+            ConstructCoordinateSystem();
         }
 
-        private void ConstructCoordinateSystem(Vector3 upDirection, Vector3 lookDirection)
+        public void ConstructCoordinateSystem()
         {
             w = -lookDirection.Normalized();
             u = Vector3.Cross(upDirection, w).Normalized();

@@ -139,6 +139,72 @@ namespace Template
             // called once per frame; app logic
             var keyboard = KeyboardState;
             if (keyboard[Keys.Escape]) terminated = true;
+
+            //control camera
+            //wasd for moving, arrows for looking, q and e for tilting
+            float translateSpeed = 0.5f;
+            float rotateSpeed = 0.05f;
+            if (keyboard[Keys.W]) app.camera.location += translateSpeed * app.camera.lookDirection;
+            if (keyboard[Keys.S]) app.camera.location -= translateSpeed * app.camera.lookDirection;
+            if (keyboard[Keys.D]) app.camera.location += translateSpeed * app.camera.rightDirection;
+            if (keyboard[Keys.A]) app.camera.location -= translateSpeed * app.camera.rightDirection;
+            if (keyboard[Keys.Right]) 
+            {
+                Vector3 rightDirection = app.camera.rightDirection;
+                Vector3 lookDirection = app.camera.lookDirection;
+                app.camera.lookDirection += rotateSpeed * rightDirection;
+                app.camera.rightDirection += rotateSpeed * -lookDirection;
+                app.camera.lookDirection = Vector3.Normalize(app.camera.lookDirection);
+                app.camera.rightDirection = Vector3.Normalize(app.camera.rightDirection);
+            }
+            if (keyboard[Keys.Left])
+            {
+                Vector3 rightDirection = app.camera.rightDirection;
+                Vector3 lookDirection = app.camera.lookDirection;
+                app.camera.lookDirection -= rotateSpeed * rightDirection;
+                app.camera.rightDirection -= rotateSpeed * -lookDirection;
+                app.camera.lookDirection = Vector3.Normalize(app.camera.lookDirection);
+                app.camera.rightDirection = Vector3.Normalize(app.camera.rightDirection);
+            }
+            if (keyboard[Keys.Space]) app.camera.location += translateSpeed * app.camera.upDirection;
+            if (keyboard[Keys.LeftShift]) app.camera.location -= translateSpeed * app.camera.upDirection;
+            if (keyboard[Keys.E])
+            {
+                Vector3 rightDirection = app.camera.rightDirection;
+                Vector3 upDirection = app.camera.upDirection;
+                app.camera.upDirection += rotateSpeed * rightDirection;
+                app.camera.rightDirection += rotateSpeed * -upDirection;
+                app.camera.upDirection = Vector3.Normalize(app.camera.upDirection);
+                app.camera.rightDirection = Vector3.Normalize(app.camera.rightDirection);
+            }
+            if (keyboard[Keys.Q])
+            {
+                Vector3 rightDirection = app.camera.rightDirection;
+                Vector3 upDirection = app.camera.upDirection;
+                app.camera.upDirection -= rotateSpeed * rightDirection;
+                app.camera.rightDirection -= rotateSpeed * -upDirection;
+                app.camera.upDirection = Vector3.Normalize(app.camera.upDirection);
+                app.camera.rightDirection = Vector3.Normalize(app.camera.rightDirection);
+            }
+            if (keyboard[Keys.Up])
+            {
+                Vector3 lookDirection = app.camera.lookDirection;
+                Vector3 upDirection = app.camera.upDirection;
+                app.camera.lookDirection += rotateSpeed * upDirection;
+                app.camera.upDirection += rotateSpeed * -lookDirection;
+                app.camera.upDirection = Vector3.Normalize(app.camera.upDirection);
+                app.camera.lookDirection = Vector3.Normalize(app.camera.lookDirection);
+            }
+            if (keyboard[Keys.Down])
+            {
+                Vector3 lookDirection = app.camera.lookDirection;
+                Vector3 upDirection = app.camera.upDirection;
+                app.camera.lookDirection -= rotateSpeed * upDirection;
+                app.camera.upDirection -= rotateSpeed * -lookDirection;
+                app.camera.upDirection = Vector3.Normalize(app.camera.upDirection);
+                app.camera.lookDirection = Vector3.Normalize(app.camera.lookDirection);
+            }
+            app.camera.ConstructCoordinateSystem();
         }
         protected override void OnRenderFrame(FrameEventArgs e)
         {
