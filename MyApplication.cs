@@ -63,7 +63,11 @@ namespace Template
             node teapotling1Node = new node(teapotNode, teapotLing1);
             node teapotling2Node = new node(teapotling1Node, teapotling2);
 
-            teapotNode.AddLight(new Light(new Vector3(10, 5, 0), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Light(new Vector3(10, 10, -10), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Light(new Vector3(10, -5, 0), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Light(new Vector3(10, 5, 5), new Vector3(1, 1, 1), 0.5f));
+            teapotNode.AddLight(new Light(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 1));
+
         }
 
         // tick for background surface
