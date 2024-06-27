@@ -18,18 +18,18 @@ namespace Template
         int triangleBufferId;                   // element buffer object (EBO) for triangle vertex indices
         int quadBufferId;                       // element buffer object (EBO) for quad vertex indices (not in Modern OpenGL)
         public Matrix4 parentToWorld; //model matrix
-        public Matrix4 scaleMatrix;
+        public Matrix4 scaleAndRotationMatrix;
         public Texture texture;
         
         
         
         // constructor
-        public Mesh(string filename, Texture texture, Matrix4 parentToWorld, Matrix4 scaleMatrix)
+        public Mesh(string filename, Texture texture, Matrix4 parentToWorld, Matrix4 scaleAndRotationMatrix)
         {
             this.filename = filename;
             this.texture = texture;
             this.parentToWorld = parentToWorld;
-            this.scaleMatrix = scaleMatrix;
+            this.scaleAndRotationMatrix = scaleAndRotationMatrix;
             MeshLoader loader = new();
             loader.Load(this, filename);
         }
