@@ -61,6 +61,7 @@ namespace Template
             teapotNode.AddLight(new Light(new Vector3(10, -5, 0), new Vector3(1, 1, 1), 1));
             teapotNode.AddLight(new Light(new Vector3(10, 5, 5), new Vector3(1, 1, 1), 0.5f));
             teapotNode.AddLight(new Light(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Spotlight(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 1, 30, new Vector3(0, 0, -1)));
 
         }
 

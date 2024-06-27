@@ -28,6 +28,12 @@ namespace Template
         public int uniform_lightIntensity4;
         public int uniform_viewPosition;
 
+        public int uniform_lightPositionSpotlight;
+        public int uniform_lightDirectionSpotlight;
+        public int uniform_lightCutoffAngleSpotlight;
+        public int uniform_lightColorSpotlight;
+        public int uniform_lightIntensitySpotlight;
+
         // constructor
         public Shader(string vertexShader, string fragmentShader)
         {
@@ -60,6 +66,11 @@ namespace Template
             uniform_lightIntensity3 = GL.GetUniformLocation(programID, "lightIntensity3");
             uniform_lightIntensity4 = GL.GetUniformLocation(programID, "lightIntensity4");
             uniform_viewPosition = GL.GetUniformLocation(programID, "viewPosition");
+            uniform_lightPositionSpotlight = GL.GetUniformLocation(programID, "lightPositionSpotlight");
+            uniform_lightDirectionSpotlight = GL.GetUniformLocation(programID, "lightDirectionSpotlight");
+            uniform_lightCutoffAngleSpotlight = GL.GetUniformLocation(programID, "lightCutoffAngleSpotlight");
+            uniform_lightColorSpotlight = GL.GetUniformLocation(programID, "lightColorSpotlight");
+            uniform_lightIntensitySpotlight = GL.GetUniformLocation(programID, "lightIntensitySpotlight");
         }
 
         // loading shaders

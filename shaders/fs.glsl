@@ -44,7 +44,7 @@ void main()
 
     float spotlightLight = ambient;
 
-    if (dot(spotlightDir, lightDir) > lightCutoffAngleSpotlight) {
+    if (acos(dot(spotlightDir, lightDir)) > radians(lightCutoffAngleSpotlight)) {
         float diffSpotlight = max(dot(norm, lightDirectionSpotlight));
 
         if (diffSpotlight > 0.0) {
