@@ -34,11 +34,15 @@ namespace Template
         // initialize
         public void Init()
         {
-
+            // load textures
+            wood = new Texture("../../../assets/wood.jpg");
+            Texture coin = new Texture("../../../assets/coin.png");
+            Texture yellow = new Texture("../../../assets/yellow.jpg");
             // load teapot
-            motherTeapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(10, 3, 0)), Matrix4.CreateScale(0.5f));// * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a));
-            Mesh teapotLing1 = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(-10, 0, 0)), Matrix4.CreateScale(0.5f));
-            Mesh teapotling2 = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(-8, 0, 0)), Matrix4.CreateScale(0.6f));
+            motherTeapot = new Mesh("../../../assets/teapot.obj", wood, Matrix4.CreateTranslation(new Vector3(10, 3, 0)), Matrix4.CreateScale(0.5f));// * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a));
+            Mesh teapotLing1 = new Mesh("../../../assets/teapot.obj", wood, Matrix4.CreateTranslation(new Vector3(-10, 0, 0)), Matrix4.CreateScale(0.5f));
+            Mesh teapotling2 = new Mesh("../../../assets/teapot.obj", wood, Matrix4.CreateTranslation(new Vector3(-8, 0, 0)), Matrix4.CreateScale(0.6f));
+            Mesh banana = new Mesh("../../../assets/banana.obj", yellow, Matrix4.CreateTranslation(new Vector3(0, 0, 5)), Matrix4.CreateScale(0.1f));
             //floor = new Mesh("../../../assets/floor.obj");
             // initialize stopwatch
             timer.Reset();
@@ -46,8 +50,6 @@ namespace Template
             // create shaders
             shader = new Shader("../../../shaders/vs.glsl", "../../../shaders/fs.glsl");
             postproc = new Shader("../../../shaders/vs_post.glsl", "../../../shaders/fs_post.glsl");
-            // load a texture
-            wood = new Texture("../../../assets/wood.jpg");
             // create the render target
             if (useRenderTarget) target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
@@ -62,6 +64,7 @@ namespace Template
             node teapotNode = new node(world, motherTeapot);
             node teapotling1Node = new node(teapotNode, teapotLing1);
             node teapotling2Node = new node(teapotling1Node, teapotling2);
+            node bananaNode = new node(world, banana);
 
             teapotNode.AddLight(new Light(new Vector3(10, 10, -10), new Vector3(1, 1, 1), 1));
             teapotNode.AddLight(new Light(new Vector3(10, -5, 0), new Vector3(1, 1, 1), 1));
@@ -154,7 +157,7 @@ namespace Template
             GL.End();
             */
 
-            world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, wood, camera.location);
+            world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, camera.location);
         }
     }
 }
