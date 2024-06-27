@@ -10,14 +10,19 @@ uniform vec3 lightPosition1;
 uniform vec3 lightPosition2;
 uniform vec3 lightPosition3;
 uniform vec3 lightPosition4;
+uniform vec3 lightPositionSpotlight;
+uniform vec3 lightDirectionSpotlight;
+uniform float lightCutoffAngleSpotlight;
 uniform vec3 lightColor1;
 uniform vec3 lightColor2;
 uniform vec3 lightColor3;
 uniform vec3 lightColor4;
+uniform vec3 lightColorSpotlight;
 uniform float lightIntensity1;
 uniform float lightIntensity2;
 uniform float lightIntensity3;
 uniform float lightIntensity4;
+uniform float lightIntensitySpotlight;
 uniform vec3 viewPosition;
 
 // shader output
@@ -33,6 +38,25 @@ void main()
     vec3 lightDir2 = normalize(lightPosition2 - vec3(positionWorld)); 
     vec3 lightDir3 = normalize(lightPosition3 - vec3(positionWorld)); 
     vec3 lightDir4 = normalize(lightPosition4 - vec3(positionWorld)); 
+    
+    vec3 lightDirectionSpotlight = normalize(lightPositionSpotlight - vec3(positionWorld));
+    vec3 spotlightDir = normalize(-lightDirectionSpotlight);
+
+    float spotlightLight = ambient;
+
+    if (dot(spotlightDir, lightDir) > lightCutoffAngleSpotlight) {
+        float diffSpotlight = max(dot(norm, lightDirectionSpotlight));
+
+        if (diffSpotlight > 0.0) {
+            vec3 reflectDirSpotlight = reflect(-lightDirectionSpotlight, norm);
+            specSpotlight = pow(max(dot(viewDir, reflectDirSpotlight), 0.0), 32.0);
+            spotlightLight += (diffuseSpotlight + specSpotlight) * textureColor;
+        }
+        // n = norm;
+        // ld = lightDir;
+        // h = viewDir;
+        // n = reflectDir;
+    }
 
     float diff1 = max(dot(norm, lightDir1), 0.0);
     float diff2 = max(dot(norm, lightDir2), 0.0);
@@ -63,7 +87,7 @@ void main()
 
     vec4 textureColor = texture(diffuseTexture, uv); 
 
-    outputColor = ambient * textureColor;
+    outputColor = spotlightLight * textureColor;
     outputColor += (diffuse1 + specular1) * textureColor;
     outputColor += (diffuse2 + specular2) * textureColor;
     outputColor += (diffuse3 + specular3) * textureColor;
