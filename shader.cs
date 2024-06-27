@@ -14,9 +14,18 @@ namespace Template
         public int uniform_objectToScreen;
         public int uniform_objectToWorld;
         public int uniform_ambientLightColor;
-        public int uniform_lightPosition;
-        public int uniform_lightColor;
-        public int uniform_lightIntensity;
+        public int uniform_lightPosition1;
+        public int uniform_lightPosition2;
+        public int uniform_lightPosition3;
+        public int uniform_lightPosition4;
+        public int uniform_lightColor1;
+        public int uniform_lightColor2;
+        public int uniform_lightColor3;
+        public int uniform_lightColor4;
+        public int uniform_lightIntensity1;
+        public int uniform_lightIntensity2;
+        public int uniform_lightIntensity3;
+        public int uniform_lightIntensity4;
         public int uniform_viewPosition;
 
         // constructor
@@ -38,9 +47,18 @@ namespace Template
             uniform_objectToScreen = GL.GetUniformLocation(programID, "objectToScreen");
             uniform_objectToWorld = GL.GetUniformLocation(programID, "objectToWorld");
             uniform_ambientLightColor = GL.GetUniformLocation(programID, "ambientLightColor");
-            uniform_lightPosition = GL.GetUniformLocation(programID, "lightPosition");
-            uniform_lightColor = GL.GetUniformLocation(programID, "lightColor");
-            uniform_lightIntensity = GL.GetUniformLocation(programID, "lightIntensity");
+            uniform_lightPosition1 = GL.GetUniformLocation(programID, "lightPosition1");
+            uniform_lightPosition2 = GL.GetUniformLocation(programID, "lightPosition2");
+            uniform_lightPosition3 = GL.GetUniformLocation(programID, "lightPosition3");
+            uniform_lightPosition4 = GL.GetUniformLocation(programID, "lightPosition4");
+            uniform_lightColor1 = GL.GetUniformLocation(programID, "lightColor1");
+            uniform_lightColor2 = GL.GetUniformLocation(programID, "lightColor2");
+            uniform_lightColor3 = GL.GetUniformLocation(programID, "lightColor3");
+            uniform_lightColor4 = GL.GetUniformLocation(programID, "lightColor4");
+            uniform_lightIntensity1 = GL.GetUniformLocation(programID, "lightIntensity1");
+            uniform_lightIntensity2 = GL.GetUniformLocation(programID, "lightIntensity2");
+            uniform_lightIntensity3 = GL.GetUniformLocation(programID, "lightIntensity3");
+            uniform_lightIntensity4 = GL.GetUniformLocation(programID, "lightIntensity4");
             uniform_viewPosition = GL.GetUniformLocation(programID, "viewPosition");
         }
 

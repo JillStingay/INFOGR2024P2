@@ -18,16 +18,18 @@ namespace Template
         int triangleBufferId;                   // element buffer object (EBO) for triangle vertex indices
         int quadBufferId;                       // element buffer object (EBO) for quad vertex indices (not in Modern OpenGL)
         public Matrix4 parentToWorld; //model matrix
-        public Matrix4 scaleMatrix;
+        public Matrix4 scaleAndRotationMatrix;
+        public Texture texture;
         
         
         
         // constructor
-        public Mesh(string filename, Matrix4 parentToWorld, Matrix4 scaleMatrix)
+        public Mesh(string filename, Texture texture, Matrix4 parentToWorld, Matrix4 scaleAndRotationMatrix)
         {
             this.filename = filename;
+            this.texture = texture;
             this.parentToWorld = parentToWorld;
-            this.scaleMatrix = scaleMatrix;
+            this.scaleAndRotationMatrix = scaleAndRotationMatrix;
             MeshLoader loader = new();
             loader.Load(this, filename);
         }
@@ -96,12 +98,27 @@ namespace Template
             GL.VertexAttribPointer(shader.in_vertexNormalObject, 3, VertexAttribPointerType.Float, true, 32, 2 * 4);
             GL.VertexAttribPointer(shader.in_vertexPositionObject, 3, VertexAttribPointerType.Float, false, 32, 5 * 4);
 
-            if (lights != null && lights.Count > 0)
-            {
-                Light firstLight = lights[0];
-                GL.Uniform3(shader.uniform_lightPosition, firstLight.Position);
-                GL.Uniform3(shader.uniform_lightColor, firstLight.Color);
-                GL.Uniform1(shader.uniform_lightIntensity, firstLight.Intensity);
+            if (lights != null && lights.Count > 0) {
+                Light Light = lights[0];
+                GL.Uniform3(shader.uniform_lightPosition1, Light.Position);
+                GL.Uniform3(shader.uniform_lightColor1, Light.Color);
+                GL.Uniform1(shader.uniform_lightIntensity1, Light.Intensity);
+                if (lights.Count > 1) {
+                    Light = lights[1];
+                    GL.Uniform3(shader.uniform_lightPosition2, Light.Position);
+                    GL.Uniform3(shader.uniform_lightColor2, Light.Color);
+                    GL.Uniform1(shader.uniform_lightIntensity2, Light.Intensity);
+                    if (lights.Count > 2) {
+                        Light = lights[2];
+                        GL.Uniform3(shader.uniform_lightPosition3, Light.Position);
+                        GL.Uniform3(shader.uniform_lightColor3, Light.Color);
+                        GL.Uniform1(shader.uniform_lightIntensity3, Light.Intensity);
+                        if (lights.Count > 3) {
+                            Light = lights[3];
+                            GL.Uniform3(shader.uniform_lightPosition4, Light.Position);
+                            GL.Uniform3(shader.uniform_lightColor4, Light.Color);
+                            GL.Uniform1(shader.uniform_lightIntensity4, Light.Intensity); 
+                        } } }
             }
 
             GL.Uniform3(shader.uniform_viewPosition, ref cameraPosition);

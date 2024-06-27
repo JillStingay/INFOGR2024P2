@@ -2,6 +2,8 @@ using System.Diagnostics;
 using OpenTK.Mathematics;
 using OpenTK.Graphics.OpenGL;
 using INFOGR2024TemplateP2;
+using OpenTK.Windowing.Common;
+using OpenTK.Graphics.ES11;
 
 namespace Template
 {
@@ -9,20 +11,14 @@ namespace Template
     {
         // member variables
         public Surface screen;                  // background surface for printing etc.
-        Mesh? motherTeapot, floor;                    // meshes to draw using OpenGL
-        float a = 0;                            // teapot rotation angle
         readonly Stopwatch timer = new();       // timer for measuring frame duration
         Shader? shader;                         // shader to use for rendering
         Shader? postproc;                       // shader to use for post processing
-        Texture? wood;                          // texture to use for rendering
         RenderTarget? target;                   // intermediate render target
         ScreenQuad? quad;                       // screen filling quad for post processing
         readonly bool useRenderTarget = true;   // required for post processing
-
-        Surface map;
-        float[,] h;
-        Camera camera;
-        node world;
+        public Camera camera;
+        node worldNode;
 
         // constructor
         public MyApplication(Surface screen)
@@ -32,123 +28,52 @@ namespace Template
         // initialize
         public void Init()
         {
-
+            // load textures
+            Texture wood = new Texture("../../../assets/wood.jpg");
+            Texture coin = new Texture("../../../assets/coin.png");
+            Texture yellow = new Texture("../../../assets/yellow.jpg");
+            Texture redMetal = new Texture("../../../assets/redMetal.jpg");
+            Texture grass = new Texture("../../../assets/grass.jpg");
             // load teapot
-            motherTeapot = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(10, 3, 0)), Matrix4.CreateScale(0.5f));// * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a));
-            Mesh teapotLing1 = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(-10, 0, 0)), Matrix4.CreateScale(0.5f));
-            Mesh teapotling2 = new Mesh("../../../assets/teapot.obj", Matrix4.CreateTranslation(new Vector3(-8, 0, 0)), Matrix4.CreateScale(0.6f));
-            //floor = new Mesh("../../../assets/floor.obj");
+            Mesh teapot = new Mesh("../../../assets/teapot.obj", redMetal,Matrix4.CreateTranslation(new Vector3(3, 5.5f, 0)), Matrix4.CreateScale(2) * Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)(Math.PI / 4)));
+            Mesh banana = new Mesh("../../../assets/banana.obj", yellow, Matrix4.CreateTranslation(new Vector3(-3, 5.7f, 2)), Matrix4.CreateScale(0.5f) * Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(Math.PI / 2)) * Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(-Math.PI / 16)));
+            Mesh floor = new Mesh("../../../assets/floor.obj", grass, Matrix4.CreateTranslation(new Vector3(0, 0, 0)), Matrix4.CreateScale(4));
+            Mesh table = new Mesh("../../../assets/table.obj", wood, Matrix4.CreateTranslation(new Vector3(0, -8, 0)), Matrix4.CreateScale(0.03f));
             // initialize stopwatch
             timer.Reset();
             timer.Start();
             // create shaders
             shader = new Shader("../../../shaders/vs.glsl", "../../../shaders/fs.glsl");
             postproc = new Shader("../../../shaders/vs_post.glsl", "../../../shaders/fs_post.glsl");
-            // load a texture
-            wood = new Texture("../../../assets/wood.jpg");
             // create the render target
             if (useRenderTarget) target = new RenderTarget(screen.width, screen.height);
             quad = new ScreenQuad();
 
-            /*map = new Surface("../../../assets/coin.png");
-            h = new float[256, 256];
-            for (int y = 0; y < 256; y++) for (int x = 0; x < 256; x++)
-                    h[x, y] = ((float)(map.pixels[x + y * 256] & 255)) / 256;*/
+            camera = new Camera(new Vector3(0, 0, 20), new Vector3(0, 1, 0), new Vector3(0, 0, -1), new Vector3(1, 0, 0));
+            worldNode = new node(null, null);
 
-            camera = new Camera(new Vector3(0, 0, 20), new Vector3(0, 1, 0), new Vector3(0, 0, -1));
-            world = new node(null, null);
-            node teapotNode = new node(world, motherTeapot);
-            node teapotling1Node = new node(teapotNode, teapotLing1);
-            node teapotling2Node = new node(teapotling1Node, teapotling2);
+            node floorNode = new node(worldNode, floor);
+            node tableNode = new node(floorNode, table);
+            node teapotNode = new node(tableNode, teapot);
+            node bananaNode = new node(tableNode, banana);
 
-            teapotNode.AddLight(new Light(new Vector3(10, 5, 0), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Light(new Vector3(10, 10, -10), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Light(new Vector3(10, -5, 0), new Vector3(1, 1, 1), 1));
+            teapotNode.AddLight(new Light(new Vector3(10, 5, 5), new Vector3(1, 1, 1), 0.5f));
+            teapotNode.AddLight(new Light(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 1));
+
         }
 
         // tick for background surface
         public void Tick()
         {
             screen.Clear(0);
-            //screen.Print("hello world", 2, 2, 0xffff00);
-            //a += 0.1f;
         }
 
         // tick for OpenGL rendering code
         public void RenderGL()
         {
-            /*
-            // measure frame duration
-            float frameDuration = timer.ElapsedMilliseconds;
-            timer.Reset();
-            timer.Start();
-
-            // prepare matrix for vertex shader
-            float angle90degrees = MathF.PI / 2;
-            Matrix4 teapotObjectToWorld = Matrix4.CreateScale(0.5f) * Matrix4.CreateFromAxisAngle(new Vector3(3, 0, 1), a);
-            Matrix4 floorObjectToWorld = Matrix4.CreateScale(4.0f) * Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), a);
-            Matrix4 worldToCamera = Matrix4.CreateTranslation(new Vector3(0, -14.5f, 0)) * Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), angle90degrees);
-            Matrix4 cameraToScreen = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(60.0f), (float)screen.width/screen.height, .1f, 1000);
-
-            // update rotation
-            //a += 0.001f * frameDuration;
-            if (a > 2 * MathF.PI) a -= 2 * MathF.PI;
-
-            if (useRenderTarget && target != null && quad != null)
-            {
-                // enable render target
-                target.Bind();
-
-                // render scene to render target
-                if (shader != null && wood != null)
-                {
-                    teapot?.Render(shader, teapotObjectToWorld * worldToCamera * cameraToScreen, teapotObjectToWorld, wood);
-                    //floor?.Render(shader, floorObjectToWorld * worldToCamera * cameraToScreen, floorObjectToWorld, wood);
-                }
-
-                // render quad
-                target.Unbind();
-                if (postproc != null)
-                    quad.Render(postproc, target.GetTextureID());
-            }
-            else
-            {
-                // render scene directly to the screen
-                if (shader != null && wood != null)
-                {
-                    teapot?.Render(shader, teapotObjectToWorld * worldToCamera * cameraToScreen, teapotObjectToWorld, wood);
-                    floor?.Render(shader, floorObjectToWorld * worldToCamera * cameraToScreen, floorObjectToWorld, wood);
-                }
-            }
-            
-            /*
-            Matrix4 M = Matrix4.CreatePerspectiveFieldOfView(1.6f, 1.3f, .1f, 1000);
-            GL.LoadMatrix(ref M);
-            GL.Translate(0, 0, -1);
-            GL.Rotate(110, 1, 0, 0);
-            GL.Rotate(a * 180 / Math.PI, 0, 0, 1);
-
-            GL.Color3(1.0f, 0.0f, 0.0f);
-
-            GL.Begin(PrimitiveType.Quads);
-            for (float x = 0; x < 255; x++)
-                for (float y = 0; y < 255; y++)
-                {
-                    GL.Vertex3((x / (256f / 2f)) - 1f, y / (256f / 2f) - 1f, h[(int)x, (int)y]);
-                    GL.Vertex3((x / (256f / 2f)) - 1f + (2f/256f), y / (256f / 2f) - 1f, h[(int)x + 1, (int)y]);
-                    GL.Vertex3((x / (256f / 2f)) - 1f, y / (256f / 2f) - 1f + (2f/256f), h[(int)x, (int)y + 1]);
-                    GL.Vertex3((x / (256f / 2f)) - 1f + (2f / 256f), y / (256f / 2f) - 1f + (2f / 256f), h[(int)x + 1, (int)y + 1]);
-                }
-            GL.End();
-            */
-            /*
-            GL.Color3(1.0f, 0.0f, 0.0f);
-            GL.Begin(PrimitiveType.Triangles);
-            GL.Vertex3(0, 0, 1);
-            GL.Vertex3(1, 1, 1);
-            GL.Vertex3(-1, 1, 1);
-            GL.End();
-            */
-
-            world.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, wood, camera.location);
+            worldNode.Render(camera.WorldToCamera(), Matrix4.Identity, screen, shader, camera.location);
         }
     }
 }
