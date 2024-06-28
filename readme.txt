@@ -43,3 +43,8 @@ Bonus features implemented:
 
 Notes:
 ...
+
+Sources:
+    Spotlight calculations
+        Partial source: https://learnopengl.com/Lighting/Light-casters
+        Other source: https://www.lighthouse3d.com/tutorials/glsl-tutorial/spotlights/
