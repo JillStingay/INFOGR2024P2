@@ -50,7 +50,9 @@ void main()
     vec4 ambient = vec4(ambientLightColor, 1.0);
     vec4 textureColor = texture(diffuseTexture, uv);
 
-    // Spotlight calculations    
+    // Spotlight calculations
+    // Partial source: https://learnopengl.com/Lighting/Light-casters
+    // Other source: https://www.lighthouse3d.com/tutorials/glsl-tutorial/spotlights/
     vec3 lightDirSpotlight = normalize(lightPositionSpotlight - vec3(positionWorld));
 
     // Calculate lighting intensity for spotlight
