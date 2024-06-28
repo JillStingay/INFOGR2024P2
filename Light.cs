@@ -19,4 +19,17 @@ namespace Template
             this.Intensity = intensity;
         }
     }
+
+    public class Spotlight : Light
+    {
+        public float InnerAngle { get; set; }
+        public float OuterAngle { get; set; }
+        public Vector3 Direction { get; set; }
+        public Spotlight(Vector3 position, Vector3 color, float intensity, float innerAngle, float outerAngle, Vector3 lightDirection) : base(position, color, intensity)
+        {
+            this.InnerAngle = innerAngle;
+            this.OuterAngle = outerAngle;
+            this.Direction = lightDirection;
+        }
+    }
 }

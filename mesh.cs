@@ -118,7 +118,18 @@ namespace Template
                             GL.Uniform3(shader.uniform_lightPosition4, Light.Position);
                             GL.Uniform3(shader.uniform_lightColor4, Light.Color);
                             GL.Uniform1(shader.uniform_lightIntensity4, Light.Intensity); 
-                        } } }
+                        }
+                        if (lights.Count > 4 && lights[4] is Spotlight s)
+                        {
+                            GL.Uniform3(shader.uniform_lightPositionSpotlight, s.Position);
+                            GL.Uniform3(shader.uniform_lightDirectionSpotlight, s.Direction);
+                            GL.Uniform1(shader.uniform_lightInnerCutoffAngleSpotlight, MathF.Cos(MathHelper.DegreesToRadians(s.InnerAngle)));
+                            GL.Uniform1(shader.uniform_lightOuterCutoffAngleSpotlight, MathF.Cos(MathHelper.DegreesToRadians(s.OuterAngle)));            
+                            GL.Uniform3(shader.uniform_lightColorSpotlight, s.Color);
+                            GL.Uniform1(shader.uniform_lightIntensitySpotlight, s.Intensity);
+                        }
+                    }
+                }
             }
 
             GL.Uniform3(shader.uniform_viewPosition, ref cameraPosition);
