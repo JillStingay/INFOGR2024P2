@@ -31,10 +31,10 @@ namespace Template
             Texture wood = new Texture("../../../assets/wood.jpg");
             Texture coin = new Texture("../../../assets/coin.png");
             Texture yellow = new Texture("../../../assets/yellow.jpg");
-            Texture redMetal = new Texture("../../../assets/redMetal.jpg");
+            Texture metal = new Texture("../../../assets/metal.jpg");
             Texture grass = new Texture("../../../assets/grass.jpg");
             // load meshes
-            Mesh teapot = new Mesh("../../../assets/teapot.obj", redMetal,Matrix4.CreateTranslation(new Vector3(3, 5.5f, 0)), Matrix4.CreateScale(2) * Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)(Math.PI / 4)));
+            Mesh teapot = new Mesh("../../../assets/teapot.obj", metal,Matrix4.CreateTranslation(new Vector3(3, 5.5f, 0)), Matrix4.CreateScale(2) * Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)(Math.PI / 4)));
             Mesh banana = new Mesh("../../../assets/banana.obj", yellow, Matrix4.CreateTranslation(new Vector3(-3, 5.7f, 2)), Matrix4.CreateScale(0.5f) * Matrix4.CreateFromAxisAngle(new Vector3(1, 0, 0), (float)(Math.PI / 2)) * Matrix4.CreateFromAxisAngle(new Vector3(0, 0, 1), (float)(-Math.PI / 16)));
             Mesh floor = new Mesh("../../../assets/floor.obj", grass, Matrix4.CreateTranslation(new Vector3(0, 0, 0)), Matrix4.CreateScale(4));
             Mesh table = new Mesh("../../../assets/table.obj", wood, Matrix4.CreateTranslation(new Vector3(0, -8, 0)), Matrix4.CreateScale(0.03f));
