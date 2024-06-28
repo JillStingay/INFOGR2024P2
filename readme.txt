@@ -21,7 +21,7 @@ camera up: SPACE
 camera down: SHIFT
 
 [x] Model matrix: for each mesh, stored as part of the scene graph
-[x] Scene graph data structure: tree hierarchy, no limitation on breadth or depth or size
+[x] Scene graph data structure: tree hierarchy, no limitation on breadth or depth or size (node class)
 [x] Rendering: recursive scene graph traversal, correct model matrix concatenation
 [x] Shading in fragment shader: diffuse, glossy, uniform variable for ambient light color
 [x] Point light: at least 1, position/color may be hardcoded
