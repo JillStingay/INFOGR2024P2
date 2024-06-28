@@ -51,28 +51,42 @@ namespace Template
             in_vertexPositionObject = GL.GetAttribLocation(programID, "vertexPositionObject");
             in_vertexNormalObject = GL.GetAttribLocation(programID, "vertexNormalObject");
             in_vertexUV = GL.GetAttribLocation(programID, "vertexUV");
+
             uniform_objectToScreen = GL.GetUniformLocation(programID, "objectToScreen");
             uniform_objectToWorld = GL.GetUniformLocation(programID, "objectToWorld");
+
             uniform_ambientLightColor = GL.GetUniformLocation(programID, "ambientLightColor");
+
+            // Get the location of the light positions
             uniform_lightPosition1 = GL.GetUniformLocation(programID, "lightPosition1");
             uniform_lightPosition2 = GL.GetUniformLocation(programID, "lightPosition2");
             uniform_lightPosition3 = GL.GetUniformLocation(programID, "lightPosition3");
             uniform_lightPosition4 = GL.GetUniformLocation(programID, "lightPosition4");
+            uniform_lightPositionSpotlight = GL.GetUniformLocation(programID, "lightPositionSpotlight");
+
+            // Get the location of the light colors
             uniform_lightColor1 = GL.GetUniformLocation(programID, "lightColor1");
             uniform_lightColor2 = GL.GetUniformLocation(programID, "lightColor2");
             uniform_lightColor3 = GL.GetUniformLocation(programID, "lightColor3");
             uniform_lightColor4 = GL.GetUniformLocation(programID, "lightColor4");
+            uniform_lightColorSpotlight = GL.GetUniformLocation(programID, "lightColorSpotlight");
+
+            // Get the location of the light intensities
             uniform_lightIntensity1 = GL.GetUniformLocation(programID, "lightIntensity1");
             uniform_lightIntensity2 = GL.GetUniformLocation(programID, "lightIntensity2");
             uniform_lightIntensity3 = GL.GetUniformLocation(programID, "lightIntensity3");
             uniform_lightIntensity4 = GL.GetUniformLocation(programID, "lightIntensity4");
+            uniform_lightIntensitySpotlight = GL.GetUniformLocation(programID, "lightIntensitySpotlight");
+
+            // Get the location of the view (camera) position
             uniform_viewPosition = GL.GetUniformLocation(programID, "viewPosition");
-            uniform_lightPositionSpotlight = GL.GetUniformLocation(programID, "lightPositionSpotlight");
+
+            // Get the location for spotlight specific variables (light direction, inner cut off angle, outer cut off angle)
             uniform_lightDirectionSpotlight = GL.GetUniformLocation(programID, "lightDirectionSpotlight");
             uniform_lightInnerCutoffAngleSpotlight = GL.GetUniformLocation(programID, "lightInnerCutoffAngleSpotlight");
             uniform_lightOuterCutoffAngleSpotlight = GL.GetUniformLocation(programID, "lightOuterCutoffAngleSpotlight");
-            uniform_lightColorSpotlight = GL.GetUniformLocation(programID, "lightColorSpotlight");
-            uniform_lightIntensitySpotlight = GL.GetUniformLocation(programID, "lightIntensitySpotlight");
+            
+            
         }
 
         // loading shaders
