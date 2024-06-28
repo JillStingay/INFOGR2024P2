@@ -30,7 +30,8 @@ namespace Template
 
         public int uniform_lightPositionSpotlight;
         public int uniform_lightDirectionSpotlight;
-        public int uniform_lightCutoffAngleSpotlight;
+        public int uniform_lightInnerCutoffAngleSpotlight;
+        public int uniform_lightOuterCutoffAngleSpotlight;
         public int uniform_lightColorSpotlight;
         public int uniform_lightIntensitySpotlight;
 
@@ -68,7 +69,8 @@ namespace Template
             uniform_viewPosition = GL.GetUniformLocation(programID, "viewPosition");
             uniform_lightPositionSpotlight = GL.GetUniformLocation(programID, "lightPositionSpotlight");
             uniform_lightDirectionSpotlight = GL.GetUniformLocation(programID, "lightDirectionSpotlight");
-            uniform_lightCutoffAngleSpotlight = GL.GetUniformLocation(programID, "lightCutoffAngleSpotlight");
+            uniform_lightInnerCutoffAngleSpotlight = GL.GetUniformLocation(programID, "lightInnerCutoffAngleSpotlight");
+            uniform_lightOuterCutoffAngleSpotlight = GL.GetUniformLocation(programID, "lightOuterCutoffAngleSpotlight");
             uniform_lightColorSpotlight = GL.GetUniformLocation(programID, "lightColorSpotlight");
             uniform_lightIntensitySpotlight = GL.GetUniformLocation(programID, "lightIntensitySpotlight");
         }

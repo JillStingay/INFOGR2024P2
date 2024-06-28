@@ -57,11 +57,11 @@ namespace Template
             node teapotNode = new node(tableNode, teapot);
             node bananaNode = new node(tableNode, banana);
 
-            teapotNode.AddLight(new Light(new Vector3(10, 10, -10), new Vector3(1, 1, 1), 1));
-            teapotNode.AddLight(new Light(new Vector3(10, -5, 0), new Vector3(1, 1, 1), 1));
-            teapotNode.AddLight(new Light(new Vector3(10, 5, 5), new Vector3(1, 1, 1), 0.5f));
-            teapotNode.AddLight(new Light(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 1));
-            teapotNode.AddLight(new Spotlight(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 1, 30, new Vector3(0, 0, -1)));
+            teapotNode.AddLight(new Light(new Vector3(10, 10, -10), new Vector3(1, 1, 1), 0.3f));
+            teapotNode.AddLight(new Light(new Vector3(10, -5, 0), new Vector3(1, 1, 1), 0.4f));
+            teapotNode.AddLight(new Light(new Vector3(10, 5, 5), new Vector3(1, 1, 1), 0.2f));
+            teapotNode.AddLight(new Light(new Vector3(-10, 5, 0), new Vector3(1, 1, 1), 0.1f));
+            teapotNode.AddLight(new Spotlight(new Vector3(10, 10, -10), new Vector3(1, 0.1f, 0.1f), 1, 12.5f, 60.0f, new Vector3(0, -1, 0)));
 
         }
 

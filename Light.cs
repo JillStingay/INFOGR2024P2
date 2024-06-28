@@ -22,11 +22,13 @@ namespace Template
 
     public class Spotlight : Light
     {
-        public int Angle { get; set; }
+        public float InnerAngle { get; set; }
+        public float OuterAngle { get; set; }
         public Vector3 Direction { get; set; }
-        public Spotlight(Vector3 position, Vector3 color, float intensity, int angle, Vector3 lightDirection) : base(position, color, intensity)
+        public Spotlight(Vector3 position, Vector3 color, float intensity, float innerAngle, float outerAngle, Vector3 lightDirection) : base(position, color, intensity)
         {
-            this.Angle = angle;
+            this.InnerAngle = innerAngle;
+            this.OuterAngle = outerAngle;
             this.Direction = lightDirection;
         }
     }
