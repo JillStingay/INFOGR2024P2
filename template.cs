@@ -141,7 +141,7 @@ namespace Template
             if (keyboard[Keys.Escape]) terminated = true;
 
             //control camera
-            //wasd for moving, arrows for looking, q and e for tilting
+            //wasd for moving, arrows for looking, q and e for tilting, left shift for down and space for up
             float translateSpeed = 0.5f;
             float rotateSpeed = 0.05f;
             if (keyboard[Keys.W]) app.camera.location += translateSpeed * app.camera.lookDirection;
