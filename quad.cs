@@ -27,12 +27,16 @@ namespace Template
             if (vbo == 0)
             {
                 vao = GL.GenVertexArray();
+
                 GL.BindVertexArray(vao);
+
                 if (!OpenTKApp.isMac) GL.ObjectLabel(ObjectLabelIdentifier.VertexArray, vao, -1, "VAO for ScreenQuad");
                 // prepare VBO for quad rendering
                 GL.GenBuffers(1, out vbo);
                 GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
+
                 if (!OpenTKApp.isMac) GL.ObjectLabel(ObjectLabelIdentifier.Buffer, vbo, -1, "VBO for ScreenQuad");
+
                 GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(4 * 5 * 4), vertices, BufferUsageHint.StaticDraw);
                 // VBO contains vertices in correct order so no EBO needed
             }
